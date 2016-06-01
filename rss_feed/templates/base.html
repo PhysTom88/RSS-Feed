@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+	<head>
+		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+		<title>{% block title %} RSS Feed Manager{% endblock %}</title>
+	</head>
+
+	<body class="base-page">
+		<header class="base-heading">
+			<div>
+				<h1>RSS Feed Manager</h1>
+			</div>
+
+			<div id="headnav">
+				<ul>
+					<li><a href="{% url 'main:login' %}">LOGIN</a></li>
+					<li><a href="{% url 'main:register' %}">REGISTER</a></li>
+				</ul>
+			</div>
+		</header>
+		{% block content%}
+		{% endblock %}
+	</body>
+</html>
