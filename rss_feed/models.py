@@ -1,16 +1,16 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
 
-class User(models.Model):
+class UserProfile(models.Model):
 	'''Model for user'''
 
-	username = models.EmailField(max_length=254, unique=True)
-	password = models.CharField(max_length=50)
+	user = models.OneToOneField(User)	
 	joined = models.DateTimeField(default=timezone.now)
 
 	def __unicode__(self):
-		return self.username
+		return self.user.username
 
 
 class RssFeed(models.Model):
@@ -26,7 +26,7 @@ class RssFeed(models.Model):
 class Favourites(models.Model):
 	'''Model for favourites'''
 
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 	rss_feed = models.ForeignKey(RssFeed, on_delete=models.CASCADE)
 	name = models.CharField(max_length=250)
 	description = models.TextField('rss description')

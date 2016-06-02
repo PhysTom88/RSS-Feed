@@ -1,5 +1,9 @@
-from django.shortcuts import render
+from django.db import IntegrityError
+from django.shortcuts import redirect, render
 from django.views import generic
+
+from .forms import UserForm
+from .models import UserProfile
 
 class HomeView(generic.View):
 	'''View for home page
@@ -18,5 +22,30 @@ class LoginView(generic.View):
 
 
 class RegisterView(generic.View):
-	def get(self,request):
-		return render(request, 'login/register.html')
+
+	def post(self, request):
+		registered = False
+		user_form = UserForm(request.POST)
+		if user_form.is_valid():
+			try:
+				user = user_form.save()
+				user.set_password(user.password)
+				user.username = user.email
+				user.save()
+			except IntegrityError, e:
+				return render(request, 'login/register.html',
+				          {'user_form': user_form})
+
+			profile = UserProfile.objects.create(user=user)
+			profile.save()
+
+			registered = True
+			return redirect('main:landing')
+		else:
+			return render(request, 'login/register.html',
+				          {'user_form': user_form})
+
+	def get(self, request):
+		user_form = UserForm()
+		return render(request, 'login/register.html',
+			          {'user_form': user_form})

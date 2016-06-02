@@ -1,15 +1,15 @@
 from django.contrib import admin
 
-from .models import User, RssFeed
+from .models import UserProfile, RssFeed
 
-class UserAdmin(admin.ModelAdmin):
+class UserProfileAdmin(admin.ModelAdmin):
 	fieldsets = [
-	('User Name', {'fields': ['username']}),
+	('User Name', {'fields': ['user']}),
 	('Date Joined', {'fields': ['joined']})
 	]
-	list_display = ('username', 'joined')
+	list_display = ('user', 'joined')
 	list_filter = ['joined']
-	search_fields = ['username']
+	search_fields = ['user']
 
 
 class RssFeedAdmin(admin.ModelAdmin):
@@ -21,5 +21,5 @@ class RssFeedAdmin(admin.ModelAdmin):
 	search_fields = ['feed_name']
 
 
-admin.site.register(User, UserAdmin)
+admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(RssFeed, RssFeedAdmin)
