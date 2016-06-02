@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import RssFeed
+from .models import RssFeed, Subscribe
 
 
 class Email(forms.EmailField):
@@ -48,5 +48,5 @@ class RssSubscribeForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple())
 
     class Meta:
-        model = RssFeed
+        model = Subscribe
         fields = ('subscribe',)

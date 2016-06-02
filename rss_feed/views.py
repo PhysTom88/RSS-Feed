@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.views import generic
 
 from .forms import UserForm, RssSubscribeForm
-from .models import UserProfile
+from .models import UserProfile, RssFeed
 
 
 class HomeView(generic.View):
@@ -31,6 +31,12 @@ class RegisterView(generic.View):
             user.set_password(user.password)
             user.username = user.email
             user.save()
+
+            rss = rss_form.save()
+            rss.user = user
+            for feed in request.POST.getlist('subscribe'):
+                rss.rss_feed.add(RssFeed.objects.get(feed_name=feed))
+            rss.save()
 
             profile = UserProfile.objects.create(user=user)
             profile.save()

@@ -34,3 +34,10 @@ class Favourites(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class Subscribe(models.Model):
+    '''Model for linking users to rss feeds'''
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rss_feed = models.ManyToManyField(RssFeed)
