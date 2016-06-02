@@ -40,7 +40,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'Ubiquity_Test.urls'
+ROOT_URLCONF = 'RSS.urls'
 
 TEMPLATES = [
     {
@@ -58,7 +58,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Ubiquity_Test.wsgi.application'
+WSGI_APPLICATION = 'RSS.wsgi.application'
 
 
 # Database

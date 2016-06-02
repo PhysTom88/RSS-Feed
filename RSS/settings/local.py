@@ -1,4 +1,4 @@
-from Ubiquity_Test.settings.base import *
+from RSS.settings.base import *
 
 DEBUG = True
 
