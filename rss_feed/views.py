@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.views import generic
 
-from .forms import UserForm
+from .forms import UserForm, RssSubscribeForm
 from .models import UserProfile
 
 
@@ -25,7 +25,8 @@ class RegisterView(generic.View):
 
     def post(self, request):
         user_form = UserForm(request.POST)
-        if user_form.is_valid():
+        rss_form = RssSubscribeForm(request.POST)
+        if user_form.is_valid() and rss_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
             user.username = user.email
@@ -41,5 +42,6 @@ class RegisterView(generic.View):
 
     def get(self, request):
         user_form = UserForm()
+        rss_form = RssSubscribeForm()
         return render(request, 'login/register.html',
-                      {'user_form': user_form})
+                      {'user_form': user_form, 'rss_form': rss_form})
