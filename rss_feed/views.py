@@ -1,51 +1,45 @@
-from django.db import IntegrityError
 from django.shortcuts import redirect, render
 from django.views import generic
 
 from .forms import UserForm
 from .models import UserProfile
 
+
 class HomeView(generic.View):
-	'''View for home page
+    '''View for home page
 
-	   Displays current list of rss with option to 
-	   favourite a selection
-	'''
+       Displays current list of rss with option to
+       favourite a selection
+    '''
 
-	def get(self, request):
-		return render(request, 'home.html')
+    def get(self, request):
+        return render(request, 'home.html')
 
 
 class LoginView(generic.View):
-	def get(self, request):
-		return render(request, 'login/login.html')
+    def get(self, request):
+        return render(request, 'login/login.html')
 
 
 class RegisterView(generic.View):
 
-	def post(self, request):
-		registered = False
-		user_form = UserForm(request.POST)
-		if user_form.is_valid():
-			try:
-				user = user_form.save()
-				user.set_password(user.password)
-				user.username = user.email
-				user.save()
-			except IntegrityError, e:
-				return render(request, 'login/register.html',
-				          {'user_form': user_form})
+    def post(self, request):
+        user_form = UserForm(request.POST)
+        if user_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.username = user.email
+            user.save()
 
-			profile = UserProfile.objects.create(user=user)
-			profile.save()
+            profile = UserProfile.objects.create(user=user)
+            profile.save()
 
-			registered = True
-			return redirect('main:landing')
-		else:
-			return render(request, 'login/register.html',
-				          {'user_form': user_form})
+            return redirect('main:landing')
+        else:
+            return render(request, 'login/register.html',
+                          {'user_form': user_form})
 
-	def get(self, request):
-		user_form = UserForm()
-		return render(request, 'login/register.html',
-			          {'user_form': user_form})
+    def get(self, request):
+        user_form = UserForm()
+        return render(request, 'login/register.html',
+                      {'user_form': user_form})

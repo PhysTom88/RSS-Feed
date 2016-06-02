@@ -44,3 +44,33 @@ html {
 #headnav li a:hover {
     background-color: #e59400;
 }
+
+.user_form {
+    margin: 0% 30%;
+    margin-top: 1vw;
+    width: 40%;
+    border: 1px orange solid;
+    text-align: left;
+}
+
+.user_form h4 {
+    display: block;
+    padding: 2% 2%;
+    margin-top: 0;
+    background-color: orange;
+    color: white;
+}
+
+.user_form table {
+    width: 100%;
+    padding: 0% 10%; 
+}
+
+#sub-button {
+    margin: 1% 10%;
+    width: 20%;
+    height: 2vw;
+    background-color: orange;
+    color: white;
+    font-size: 1.2vw;
+}
