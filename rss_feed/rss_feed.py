@@ -1,13 +1,16 @@
-from .models import RssFeed
+from .models import RssFeed, Subscribe
 
 import feedparser
 
 
-def get_rss_feeds():
+def get_rss_feeds(request):
 
     fields = ['title', 'published', 'summary', 'url']
     feeds_detail = {}
-    feeds = RssFeed.objects.all()
+    if request.user.is_authenticated():
+        feeds = Subscribe.objects.get(user=request.user).rss_feed.all()
+    else:
+        feeds = RssFeed.objects.all()
     for feed in feeds:
         fp = feedparser.parse(feed.feed_url)
         feed_article = {}

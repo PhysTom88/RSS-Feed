@@ -16,10 +16,7 @@ class HomeView(generic.View):
     '''
 
     def get(self, request):
-        if request.user.is_authenticated:
-            feeds = get_rss_feeds()
-        else:
-            pass
+        feeds = get_rss_feeds(request)
         return render(request, 'home.html', {'feeds': feeds})
 
 
