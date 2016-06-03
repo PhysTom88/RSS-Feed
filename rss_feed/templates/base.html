@@ -13,10 +13,17 @@
 			</div>
 
 			<div id="headnav">
+			{% if user.is_authenticated %}
+				<ul>
+					<li><a href="{% url 'main:logout' %}">LOGOUT</a></li>
+					<li><a href="{% url 'main:user' %}">WELCOME, {{ user.first_name|upper }}</a></li>
+				</ul>
+			{% else %}
 				<ul>
 					<li><a href="{% url 'main:login' %}">LOGIN</a></li>
 					<li><a href="{% url 'main:register' %}">REGISTER</a></li>
 				</ul>
+			{% endif %}
 			</div>
 		</header>
 		{% block content%}

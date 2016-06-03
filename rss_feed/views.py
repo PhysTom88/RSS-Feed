@@ -1,5 +1,6 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout, decorators
 from django.shortcuts import redirect, render
+from django.utils.decorators import method_decorator
 from django.views import generic
 
 from .forms import UserForm, RssSubscribeForm
@@ -73,3 +74,18 @@ class RegisterView(generic.View):
         rss_form = RssSubscribeForm()
         return render(request, 'login/register.html',
                       {'user_form': user_form, 'rss_form': rss_form})
+
+
+class LogoutView(generic.View):
+
+    @method_decorator(decorators.login_required)
+    def get(self, request):
+        logout(request)
+        return redirect('main:landing')
+
+
+class UserView(generic.View):
+
+    @method_decorator(decorators.login_required)
+    def get(self, request):
+        return render(request, 'home.html')
