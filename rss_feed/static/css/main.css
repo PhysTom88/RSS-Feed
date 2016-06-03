@@ -86,9 +86,16 @@ html {
     text-align: left;
     height: 37vh;
     overflow: scroll;
+    border: 1px orange inset;
 }
 
-.feed-box h3, .feed-box strong, .feed-box a {
+.feed-head, .feed-box strong, .feed-box a {
     color: orange;
     text-decoration: none;
+}
+
+.feed-head {
+    width: 60%;
+    margin: 1% 20%;
+    text-align: left;
 }
