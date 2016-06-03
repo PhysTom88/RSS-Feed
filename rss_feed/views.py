@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
 from django.views import generic
 
@@ -17,8 +18,29 @@ class HomeView(generic.View):
 
 
 class LoginView(generic.View):
+
+    def post(self, request):
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(username=username,
+                            password=password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                return redirect('main:landing')
+            else:
+                message = "user is disabled!"
+                return render(request, 'login/login.html',
+                              {'message': message})
+        else:
+            message = "Username and password do not match any records"
+            return render(request, 'login/login.html',
+                          {'message': message})
+
     def get(self, request):
-        return render(request, 'login/login.html')
+        return render(request, 'login/login.html', {'message': ''})
 
 
 class RegisterView(generic.View):
