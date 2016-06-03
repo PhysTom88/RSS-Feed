@@ -2,5 +2,14 @@
 {% load static %}
 
 {% block content%}
+{% for key, value in feeds.items %}
+	<div class="feed-box">
+		<h3>{{ key }}</h3>
+		{% for field, val in value.items%}
+			<p><strong>{{ val.title }}</strong> - {{ val.published}} </br>
+			{{ val.summary }} </br> <a href="{{ val.url }}">{{ val.url }}</a></p>
+		{% endfor %}
+	</div>
+{% endfor %}
 
 {% endblock %}

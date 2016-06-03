@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from rss_feed.views import (HomeView, LoginView, RegisterView,
+from .views import (HomeView, LoginView, RegisterView,
                             LogoutView, UserView)
 
 

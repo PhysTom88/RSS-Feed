@@ -5,6 +5,7 @@ from django.views import generic
 
 from .forms import UserForm, RssSubscribeForm
 from .models import UserProfile, RssFeed
+from .rss_feed import get_rss_feeds
 
 
 class HomeView(generic.View):
@@ -15,7 +16,11 @@ class HomeView(generic.View):
     '''
 
     def get(self, request):
-        return render(request, 'home.html')
+        if request.user.is_authenticated:
+            feeds = get_rss_feeds()
+        else:
+            pass
+        return render(request, 'home.html', {'feeds': feeds})
 
 
 class LoginView(generic.View):

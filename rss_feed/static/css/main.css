@@ -79,3 +79,16 @@ html {
     color: white;
     font-size: 1.2vw;
 }
+
+.feed-box {
+    width: 60%;
+    margin: 0% 20%;
+    text-align: left;
+    height: 37vh;
+    overflow: scroll;
+}
+
+.feed-box h3, .feed-box strong, .feed-box a {
+    color: orange;
+    text-decoration: none;
+}
