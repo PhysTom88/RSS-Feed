@@ -28,6 +28,7 @@ class SubscribeAdmin(admin.ModelAdmin):
         ('Feed', {'fields': ['rss_feed']})
     ]
     list_display = ('user',)
+    filter_horizontal = ('rss_feed',)
 
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(RssFeed, RssFeedAdmin)

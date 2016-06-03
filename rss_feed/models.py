@@ -39,5 +39,5 @@ class Favourites(models.Model):
 class Subscribe(models.Model):
     '''Model for linking users to rss feeds'''
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
     rss_feed = models.ManyToManyField(RssFeed)
