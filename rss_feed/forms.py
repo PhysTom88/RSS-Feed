@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import RssFeed, Subscribe
+from .models import RssFeed, Subscribe, Favourites
 
 
 class Email(forms.EmailField):
@@ -50,3 +50,16 @@ class RssSubscribeForm(forms.ModelForm):
     class Meta:
         model = Subscribe
         fields = ('subscribe',)
+
+
+class FavouriteForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        choices = kwargs.pop('feeds')
+        super(FavouriteForm, self).__init__(*args, **kwargs)
+        self.fields['add_to_favourites'] = forms.ModelMultipleChoiceField(
+            queryset=choices, widget=forms.CheckboxSelectMultiple())
+
+    class Meta:
+        model = Favourites
+        exclude = ('system', 'user', 'article')

@@ -23,17 +23,24 @@ class RssFeed(models.Model):
         return self.feed_name
 
 
+class Article(models.Model):
+    '''Model for storing articles'''
+
+    rss_feed = models.ForeignKey(RssFeed, on_delete=models.CASCADE)
+    title = models.CharField(max_length=250)
+    summary = models.TextField('article summary')
+    published_date = models.DateTimeField('date published')
+    url = models.URLField(unique=True)
+
+    def __unicode__(self):
+        return self.title
+
+
 class Favourites(models.Model):
     '''Model for favourites'''
 
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    rss_feed = models.ForeignKey(RssFeed, on_delete=models.CASCADE)
-    name = models.CharField(max_length=250)
-    description = models.TextField('rss description')
-    published_date = models.DateTimeField('date published')
-
-    def __unicode__(self):
-        return self.name
+    user = models.OneToOneField(User, on_delete=models.CASCADE, unique=False, null=True)
+    article = models.ManyToManyField(Article)
 
 
 class Subscribe(models.Model):
