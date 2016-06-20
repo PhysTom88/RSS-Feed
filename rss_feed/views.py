@@ -60,10 +60,10 @@ class HomeView(generic.View):
     def get_user_feeds(self, request):
         subscribe = Subscribe.objects.get(user=request.user).rss_feed.all()
         favourites = Favourites.objects.filter(
-            user=request.user).values_list('pk', flat=True)
+            user=request.user).values_list('article__pk', flat=True)
         articles = Article.objects.filter(
             rss_feed__in=subscribe).order_by('-published_date').exclude(
-            id__in=favourites)
+            pk__in=favourites)
 
         return articles
 
